@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <h1>Administrar Insumos</h1>
 
-    <a href="#modalAgregar" role="button" class="btn btn-large  btn-success"
+    <a href="#modalAgregar" role="button" class="btn btn-large btn-success"
         (click)="resetInsumo()"
         data-toggle="modal">Agregar insumo</a>
 
@@ -26,31 +26,28 @@
                     <div class="form-group row">
                         <label class="col-2 col-form-label ml-2 mt-2">Denominación</label>
                         <div class="col-7 ml-3">
-
                             <input class="form-control"
                                 type="text"
                                 placeholder="Denominacion"
                                 name="denominacion"
                                 [(ngModel)]="articuloInsumo.denominacion"
                                 minlength="3" required #denominacion="ngModel">
-                            <div *ngIf="denominacion.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="denominacion.touched &&
+                                !denominacion.valid">
+                                <div *ngIf="denominacion.errors?.required">Este
+                                    campo es requerido.</div>
+                                <div *ngIf="denominacion.errors?.minlength">
+                                    Por lo menos
+                                    {{denominacion.errors.minlength.requiredLength}}
+                                    carácteres.
+                                </div>
                             </div>
-                            <div *ngIf="denominacion.errors?.minlength"
-                                class="form-control-feedback">
-                                Por lo menos
-                                {{denominacion.errors.minlength.requiredLength}}
-                                carácteres.
-                            </div>
-
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-2 col-form-label ml-2">Precios</label>
                         <div class="col-4">
-
                             <input class="form-control"
                                 type="number"
                                 placeholder="Precio Compra"
@@ -58,9 +55,11 @@
                                 [(ngModel)]="articuloInsumo.precioCompra"
                                 required #precioCompra="ngModel">
 
-                            <div *ngIf="precioCompra.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="precioCompra.touched &&
+                                !precioCompra.valid">
+                                <div *ngIf="precioCompra.errors?.required">Este
+                                    campo es requerido.</div>
                             </div>
                         </div>
 
@@ -71,10 +70,11 @@
                                 name="precioVenta"
                                 [(ngModel)]="articuloInsumo.precioVenta"
                                 required #precioVenta="ngModel">
-
-                            <div *ngIf="precioVenta.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="precioVenta.touched &&
+                                !precioVenta.valid">
+                                <div *ngIf="precioVenta.errors?.required">Este
+                                    campo es requerido.</div>
                             </div>
                         </div>
                     </div>
@@ -89,9 +89,11 @@
                                 [(ngModel)]="articuloInsumo.stockMinimo"
                                 required #stockMinimo="ngModel">
 
-                            <div *ngIf="stockMinimo.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                                <div class="alert alert-danger" role="alert"
+                                *ngIf="stockMinimo.touched &&
+                                !stockMinimo.valid">
+                                <div *ngIf="stockMinimo.errors?.required">Este
+                                    campo es requerido.</div>
                             </div>
                         </div>
 
@@ -102,16 +104,18 @@
                                 name="stockActual"
                                 [(ngModel)]="articuloInsumo.stockActual"
                                 required #stockActual="ngModel">
-                            <div *ngIf="stockActual.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                                <div class="alert alert-danger" role="alert"
+                                *ngIf="stockActual.touched &&
+                                !stockActual.valid">
+                                <div *ngIf="stockActual.errors?.required">Este
+                                    campo es requerido.</div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-2 col-form-label ml-2 mt-2">U. Medida</label>
                         <div class="col-7">
-                           <!--  <select name="unidadMedida" class="form-control"
+                            <!--  <select name="unidadMedida" class="form-control"
                                 [(ngModel)]="articuloInsumo.unidadMedida">
                                 <option value="0">Seleccione una unidad de
                                     medida</option>
@@ -120,18 +124,17 @@
                                     uMedidas; let i= index">
                                     {{unidad.denominacion}}</option>
                             </select> -->
-
-                            <select name="uMedida" 
-                            [(ngModel)]="medida"
-                            [ngModelOptions]="{standalone: true}"
-                            class="form-control">
-                            <option value="0">Seleccione una unidad de
-                                medida</option>
-                            <option [value]="unidad.id" *ngFor="let unidad
-                            of uMedidas;
-                            let i= index">
-                            {{unidad.denominacion}}</option> 
-                        </select>
+                            <select name="uMedida"
+                                [(ngModel)]="medida"
+                                [ngModelOptions]="{standalone: true}"
+                                class="form-control">
+                                <option value="0">Seleccione una unidad de
+                                    medida</option>
+                                <option [value]="unidad.id" *ngFor="let unidad
+                                    of uMedidas;
+                                    let i= index">
+                                    {{unidad.denominacion}}</option>
+                            </select>
 
                         </div>
                     </div>
@@ -175,62 +178,63 @@
 
 
     <div class="mt-3">
-   
-   
-
-    <table class="table table-dark">
-        <thead>
-            <tr>
-                <th scope="col">ID </th>
-                <th scope="col">Denominacion</th>
-                <th scope="col">Precio Compra</th>
-                <th scope="col">Precio Venta</th>
-                <th scope="col">Stock Minimo</th>
-                <th scope="col">Stock Actual </th>
-                <th scope="col">Unidad Medida</th>
-                <th scope="col">Rubro</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let insumo of insumos; let i= index">
-                <th scope="row">{{insumo.id}}</th>
-                <td> {{insumo.denominacion}}</td>
-                <td>{{insumo.precioCompra}}</td>
-                <td>{{insumo.precioVenta}}</td>
-                <td>{{insumo.stockMinimo}}</td>
-                <td>{{insumo.stockActual}}</td>
-                <td>{{insumo.unidadMedida.denominacion}}</td>
-                <td>{{insumo.rubroArticulo.denominacion}}</td>
-                <td><a href="#modalAgregar" role="button" class="btn btn-large
-                        btn-primary"
-                        data-toggle="modal" (click)="setInsumo(i)">Editar</a></td>
-                <td>
-                    <button type="button" class="btn btn-danger"
-                        (click)="eliminar(i)">Eliminar</button>
-                </td>
-            </tr>
-
-            <tr>
 
 
-                <td>
-                    <button type="button" (click)="rewind()" class="btn
-                        btn-secondary btn-sm">anterior</button>
-                </td>
-                <td colspan="2">
-                    <span *ngFor="let p of totalPages; let i= index">
-                        <a style="cursor: pointer;" (click)="setPage(i)"
-                            [ngClass]="{'text-primary': i === page }">{{ i+1
-                            }}&nbsp;&nbsp;&nbsp;</a>
-                    </span>
-                    <button type="button" class="btn btn-primary btn-sm"
-                        (click)="forward()">siguiente</button>
-                </td>
 
-            </tr>
-        </tbody>
-    </table>
-</div> 
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">ID </th>
+                    <th scope="col">Denominacion</th>
+                    <th scope="col">Precio Compra</th>
+                    <th scope="col">Precio Venta</th>
+                    <th scope="col">Stock Minimo</th>
+                    <th scope="col">Stock Actual </th>
+                    <th scope="col">Unidad Medida</th>
+                    <th scope="col">Rubro</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let insumo of insumos; let i= index">
+                    <th scope="row">{{insumo.id}}</th>
+                    <td> {{insumo.denominacion}}</td>
+                    <td>{{insumo.precioCompra}}</td>
+                    <td>{{insumo.precioVenta}}</td>
+                    <td>{{insumo.stockMinimo}}</td>
+                    <td>{{insumo.stockActual}}</td>
+                    <td>{{insumo.unidadMedida.denominacion}}</td>
+                    <td>{{insumo.rubroArticulo.denominacion}}</td>
+                    <td><a href="#modalAgregar" role="button" class="btn
+                            btn-large
+                            btn-primary"
+                            data-toggle="modal" (click)="setInsumo(i)">Editar</a></td>
+                    <td>
+                        <button type="button" class="btn btn-danger"
+                            (click)="eliminar(i)">Eliminar</button>
+                    </td>
+                </tr>
+
+                <tr>
+
+
+                    <td>
+                        <button type="button" (click)="rewind()" class="btn
+                            btn-secondary btn-sm">anterior</button>
+                    </td>
+                    <td colspan="2">
+                        <span *ngFor="let p of totalPages; let i= index">
+                            <a style="cursor: pointer;" (click)="setPage(i)"
+                                [ngClass]="{'text-primary': i === page }">{{ i+1
+                                }}&nbsp;&nbsp;&nbsp;</a>
+                        </span>
+                        <button type="button" class="btn btn-primary btn-sm"
+                            (click)="forward()">siguiente</button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 
 </div>

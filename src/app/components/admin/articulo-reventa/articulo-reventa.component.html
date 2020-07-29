@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <h1>Administrar Articulo Reventa</h1>
 
-    <a href="#modalAgregar" role="button" class="btn btn-large  btn-success"
+    <a href="#modalAgregar" role="button" class="btn btn-large btn-success"
         (click)="resetReventa()"
         data-toggle="modal">Agregar Articulo Reventa</a>
 
@@ -30,17 +30,17 @@
                                 name="denominacion"
                                 [(ngModel)]="articuloReventa.denominacion"
                                 minlength="3" required #denominacion="ngModel">
-                            <div *ngIf="denominacion.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="denominacion.touched &&
+                                !denominacion.valid">
+                                <div *ngIf="denominacion.errors?.required">Este
+                                    campo es requerido</div>
+                                <div *ngIf="denominacion.errors?.minlength">
+                                    Por lo menos
+                                    {{denominacion.errors.minlength.requiredLength}}
+                                    carácteres.
+                                </div>
                             </div>
-                            <div *ngIf="denominacion.errors?.minlength"
-                                class="form-control-feedback">
-                                Por lo menos
-                                {{denominacion.errors.minlength.requiredLength}}
-                                carácteres.
-                            </div>
-
                         </div>
                     </div>
                     <div class="form-group row">
@@ -53,9 +53,11 @@
                                 [(ngModel)]="articuloReventa.precioCompra"
                                 required #precioCompra="ngModel">
 
-                            <div *ngIf="precioCompra.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="precioCompra.touched &&
+                                !precioCompra.valid">
+                                <div *ngIf="precioCompra.errors?.required">Este
+                                    campo es requerido.</div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -65,9 +67,11 @@
                                 name="precioVenta"
                                 [(ngModel)]="articuloReventa.precioVenta"
                                 required #precioVenta="ngModel">
-                            <div *ngIf="precioVenta.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="precioVenta.touched &&
+                                !precioVenta.valid">
+                                <div *ngIf="precioVenta.errors?.required">Este
+                                    campo es requerido.</div>
                             </div>
                         </div>
                     </div>
@@ -81,9 +85,11 @@
                                 [(ngModel)]="articuloReventa.stockMinimo"
                                 required #stockMinimo="ngModel">
 
-                            <div *ngIf="stockMinimo.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="stockMinimo.touched &&
+                                !stockMinimo.valid">
+                                <div *ngIf="stockMinimo.errors?.required">Este
+                                    campo es requerido.</div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -93,16 +99,18 @@
                                 name="stockActual"
                                 [(ngModel)]="articuloReventa.stockActual"
                                 required #stockActual="ngModel">
-                            <div *ngIf="stockActual.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="stockActual.touched &&
+                                !stockActual.valid">
+                                <div *ngIf="stockActual.errors?.required">Este
+                                    campo es requerido.</div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-2 col-form-label ml-2 mt-2">U. Medida</label>
                         <div class="col-7">
-                           <!--  <select name="unidadMedida" class="form-control"
+                            <!--  <select name="unidadMedida" class="form-control"
                                 [(ngModel)]="articuloReventa.unidadMedida">
                                 <option value="0">Seleccione una unidad de
                                     medida</option>
@@ -111,18 +119,17 @@
                                     uMedidas; let i= index">
                                     {{unidad.denominacion}}</option>
                             </select> -->
-
-                            <select name="uMedida" 
-                            [(ngModel)]="medida"
-                            [ngModelOptions]="{standalone: true}"
-                            class="form-control">
-                            <option value="0">Seleccione una unidad de
-                                medida</option>
-                            <option [value]="unidad.id" *ngFor="let unidad
-                            of uMedidas;
-                            let i= index">
-                            {{unidad.denominacion}}</option> 
-                        </select>
+                            <select name="uMedida"
+                                [(ngModel)]="medida"
+                                [ngModelOptions]="{standalone: true}"
+                                class="form-control">
+                                <option value="0">Seleccione una unidad de
+                                    medida</option>
+                                <option [value]="unidad.id" *ngFor="let unidad
+                                    of uMedidas;
+                                    let i= index">
+                                    {{unidad.denominacion}}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">

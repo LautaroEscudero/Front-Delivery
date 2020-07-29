@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <h1>Administrar Articulo Manufacturado</h1>
 
-    <a href="#modalAgregar" role="button" class="btn btn-large  btn-success"
+    <a href="#modalAgregar" role="button" class="btn btn-large btn-success"
         (click)="resetManufacturado()"
         data-toggle="modal">Agregar Articulo Manufacturado</a>
 
@@ -30,15 +30,16 @@
                                 name="denominacion"
                                 [(ngModel)]="articuloManufacturado.denominacion"
                                 minlength="3" required #denominacion="ngModel">
-                            <div *ngIf="denominacion.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
-                            </div>
-                            <div *ngIf="denominacion.errors?.minlength"
-                                class="form-control-feedback">
-                                Por lo menos
-                                {{denominacion.errors.minlength.requiredLength}}
-                                carácteres.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="denominacion.touched &&
+                                !denominacion.valid">
+                                <div *ngIf="denominacion.errors?.required">Este
+                                    campo es requerido.</div>
+                                <div *ngIf="denominacion.errors?.minlength">
+                                    Por lo menos
+                                    {{denominacion.errors.minlength.requiredLength}}
+                                    carácteres.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -51,10 +52,11 @@
                                 name="precioVenta"
                                 [(ngModel)]="articuloManufacturado.precioVenta"
                                 required #precioVenta="ngModel">
-
-                            <div *ngIf="precioVenta.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="precioVenta.touched &&
+                                !precioVenta.valid">
+                                <div *ngIf="precioVenta.errors?.required">Este
+                                    campo es requerido.</div>
                             </div>
 
                         </div>
@@ -67,16 +69,19 @@
                                 [(ngModel)]="articuloManufacturado.tiempoEstimadoCocina"
                                 required #tiempoEstimadoCocina="ngModel">
 
-                            <div *ngIf="tiempoEstimadoCocina.errors?.required"
-                                class="form-control-feedback">
-                                Este campo es requerido.
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="tiempoEstimadoCocina.touched &&
+                                !tiempoEstimadoCocina.valid">
+                                <div
+                                    *ngIf="tiempoEstimadoCocina.errors?.required">Este
+                                    campo es requerido.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-2 col-form-label ml-2 mt-2">Rubro</label>
-                        <div class="col-5">
+                        <label class="col-1 col-form-label ml-2 mt-2">Rubro</label>
+                        <div class="col-5 ml-2">
                             <select [(ngModel)]="indice" name="rubro"
                                 class="form-control">
                                 <option value="0">Seleccione un
@@ -87,11 +92,17 @@
                                     {{unidad.denominacion}}</option>
                             </select>
                         </div>
-                        <div class="col-3">
+                        <div class="col-5">
                             <button type="button"
                                 (click)="addDetalle()"
                                 class="btn btn-primary ml-5">
-                                nuevo
+                                +
+                            </button>
+                            &nbsp;&nbsp;
+                            <button type="button"
+                                (click)="deleteDetalle()"
+                                class="btn btn-danger">
+                                -
                             </button>
                         </div>
                     </div>
@@ -115,19 +126,19 @@
                                 [ngModelOptions]="{standalone: true}"
                                 class="form-control">
                                 <option value="0">u. medida</option>
-                              <!--   <option [value]="unidad.cod" *ngFor="let unidad
+                                <!--   <option [value]="unidad.cod" *ngFor="let unidad
                                     of
                                     uMedidas; let i= index">
                                     {{unidad.denominacion}}</option> -->
-                                    <option [value]="unidad.id" *ngFor="let unidad
+                                <option [value]="unidad.id" *ngFor="let unidad
                                     of uMedidas;
                                     let i= index">
-                                    {{unidad.denominacion}}</option> 
+                                    {{unidad.denominacion}}</option>
                             </select>
                         </div>
                         <div class="col-4">
                             <label class="col-3 col-form-label ml-1 mt-0">Insumo</label>
-                            <select name="insumo" 
+                            <select name="insumo"
                                 [(ngModel)]="articuloManufacturado.manufacturadoDetalle[i].articuloInsumo.id"
                                 [ngModelOptions]="{standalone: true}"
                                 class="form-control">

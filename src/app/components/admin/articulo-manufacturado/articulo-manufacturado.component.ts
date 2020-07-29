@@ -25,16 +25,17 @@ export class ArticuloManufacturadoComponent implements OnInit {
     manufacturadoDetalle: [
       {
         unidadMedida: {
-          id:0
+          id: 0
         },
         cantidad: null,
         articuloInsumo: {
-          id: 0}
+          id: 0
+        }
       }
     ]
   };
 
-  uMedidas :any[] = [] /* [
+  uMedidas: any[] = [] /* [
     {
       cod: 1,
       denominacion: 'Litros'
@@ -77,7 +78,7 @@ export class ArticuloManufacturadoComponent implements OnInit {
   photoSelected: string | ArrayBuffer;
 
   constructor(private rubroService: RubroGeneralService, private manufacturadoServ: ManufacturadoService, private insuSer: InsumoService,
-     private medidaServ: MedidaService) {
+    private medidaServ: MedidaService) {
     rubroService.getRubros().subscribe((data: any) => {
       this.rubros = data;
       console.log("La data desde data", data);
@@ -89,9 +90,9 @@ export class ArticuloManufacturadoComponent implements OnInit {
       console.log("La data desde data", data);
     }, error => console.log(error)
     );
-    medidaServ.getMedidas().subscribe((data:any ) =>{
+    medidaServ.getMedidas().subscribe((data: any) => {
       this.uMedidas = data;
-    },error =>console.log(error));
+    }, error => console.log(error));
 
     this.getManufacturadoPag();
   }
@@ -99,14 +100,27 @@ export class ArticuloManufacturadoComponent implements OnInit {
   addDetalle() {
     this.articuloManufacturado.manufacturadoDetalle[this.articuloManufacturado.manufacturadoDetalle.length] = {
       unidadMedida: {
-        id:0
+        id: 0
       },
       cantidad: null,
-      articuloInsumo:{
+      articuloInsumo: {
         id: 0
       }
     };
   }
+
+  deleteDetalle() {
+    if (this.articuloManufacturado.manufacturadoDetalle.length == 1) {
+      alert("Por lo menos debe haber un detalle");
+    } else {
+      let eliminar = confirm('Desea eliminar el detalle');
+      if (eliminar) {
+        this.articuloManufacturado.manufacturadoDetalle.splice(this.articuloManufacturado.manufacturadoDetalle.length - 1, 1);
+      }
+    }
+  }
+
+
 
   ngOnInit(): void {
   }
@@ -130,9 +144,9 @@ export class ArticuloManufacturadoComponent implements OnInit {
     );
   }
 
-  getMedidaXid(id: number){
-    for(let u of this.uMedidas){
-      if(u.id == id){
+  getMedidaXid(id: number) {
+    for (let u of this.uMedidas) {
+      if (u.id == id) {
         return u;
       }
     }
@@ -269,12 +283,12 @@ export class ArticuloManufacturadoComponent implements OnInit {
       manufacturadoDetalle: [
         {
           unidadMedida: {
-            id:0
+            id: 0
           },
           cantidad: null,
-          articuloInsumo:{
+          articuloInsumo: {
             id: 0
-          } 
+          }
         }
       ]
     };
