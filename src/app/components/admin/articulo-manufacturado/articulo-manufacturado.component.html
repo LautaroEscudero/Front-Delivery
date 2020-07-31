@@ -119,26 +119,47 @@
                                 [ngModelOptions]="{standalone: true}"
                                 required>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4"
+                            *ngIf="false">
                             <label class="col-md-4 col-form-label ml-2">U.Medida</label>
-                            <select name="unidadMedida"
+                            <br>
+                            <label class="col-md-4 col-form-label ml-2">
+                                {{articuloManufacturado.manufacturadoDetalle[i].articuloInsumo.unidadMedida.denominacion}}</label>
+                            <!-- <input class="form-control"
+                                disabled="true"
+                                type="text"
+                                placeholder="U.Medida"
+                                name="uniMedida"
+                                [(ngModel)]="articuloManufacturado.manufacturadoDetalle[i].articuloInsumo.unidadMedida.denominacion"
+                               > -->
+                            <!--  <select name="unidadMedida"
                                 [(ngModel)]="articuloManufacturado.manufacturadoDetalle[i].unidadMedida.id"
                                 [ngModelOptions]="{standalone: true}"
                                 class="form-control">
                                 <option value="0">u. medida</option>
-                                <!--   <option [value]="unidad.cod" *ngFor="let unidad
-                                    of
-                                    uMedidas; let i= index">
-                                    {{unidad.denominacion}}</option> -->
                                 <option [value]="unidad.id" *ngFor="let unidad
                                     of uMedidas;
                                     let i= index">
                                     {{unidad.denominacion}}</option>
-                            </select>
+                            </select> -->
+                        </div>
+                        <div class="col-md-4">
+                           <!--  articuloManufacturado.manufacturadoDetalle[i].articuloInsumo.unidadMedida
+                            == null -->
+                            <label class="col-md-4 col-form-label ml-2">U.Medida</label><br>
+                            <label class="col-md-4 col-form-label ml-2">{{articuloManufacturado.manufacturadoDetalle[i].denominacion}}</label>
+                           <!--  <input class="form-control"
+                               disabled=true
+                                type="text"
+                                placeholder="U.Medida"
+                                name="uniMedid"
+                                [(ngModel)]="articuloManufacturado.manufacturadoDetalle[i].denominacion"> -->
                         </div>
                         <div class="col-4">
                             <label class="col-3 col-form-label ml-1 mt-0">Insumo</label>
                             <select name="insumo"
+                                (change)="getUnidad(articuloManufacturado.manufacturadoDetalle[i].articuloInsumo.id,
+                                i)"
                                 [(ngModel)]="articuloManufacturado.manufacturadoDetalle[i].articuloInsumo.id"
                                 [ngModelOptions]="{standalone: true}"
                                 class="form-control">

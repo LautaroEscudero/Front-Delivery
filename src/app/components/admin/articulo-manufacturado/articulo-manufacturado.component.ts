@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InsumoService } from '../../../services/insumo.service';
 import { ManufacturadoService } from '../../../services/manufacturado.service';
 import { MedidaService } from '../../../services/medida.service';
+import { Insumo } from '../../../modelo/insumo';
 
 @Component({
   selector: 'app-articulo-manufacturado',
@@ -25,8 +26,9 @@ export class ArticuloManufacturadoComponent implements OnInit {
     manufacturadoDetalle: [
       {
         unidadMedida: {
-          id: 0
+          id: 0,
         },
+        denominacion:'',
         cantidad: null,
         articuloInsumo: {
           id: 0
@@ -61,7 +63,7 @@ export class ArticuloManufacturadoComponent implements OnInit {
   rubros: any[];
   insumos: any[];
 
-  manufacturados: [];
+  manufacturados: any[];
 
   totalPages: Array<number>;
 
@@ -103,6 +105,7 @@ export class ArticuloManufacturadoComponent implements OnInit {
         id: 0
       },
       cantidad: null,
+      denominacion:'',
       articuloInsumo: {
         id: 0
       }
@@ -119,8 +122,6 @@ export class ArticuloManufacturadoComponent implements OnInit {
       }
     }
   }
-
-
 
   ngOnInit(): void {
   }
@@ -142,6 +143,18 @@ export class ArticuloManufacturadoComponent implements OnInit {
       this.totalPages = new Array(data.totalPages);
     }, error => console.log(error)
     );
+
+    setTimeout (() => {
+      this.addDescrip();
+   }, 500);
+  }
+
+  addDescrip(){
+    for(let m of this.manufacturados){
+    for(let d of m.manufacturadoDetalle){
+      d.denominacion = d.articuloInsumo.unidadMedida.denominacion;
+    }
+    }
   }
 
   getMedidaXid(id: number) {
@@ -150,6 +163,18 @@ export class ArticuloManufacturadoComponent implements OnInit {
         return u;
       }
     }
+  }
+
+  getUnidad(id: number, i : number){
+   let ins: Insumo =  this.getInsumoxId(id);
+  // return ins.unidadMedida.denominacion;
+
+  console.log("El valor de i es : ", i);
+  console.log("El id es : ", id);  
+  console.log("La unidad de medida es : ", ins.unidadMedida.denominacion);
+ // this.articuloManufacturado.manufacturadoDetalle[i]
+ // .articuloInsumo.unidadMedida.denominacion = ins.unidadMedida.denominacion;
+  this.articuloManufacturado.manufacturadoDetalle[i].denominacion = ins.unidadMedida.denominacion;
   }
 
   guardar(forma: NgForm) {
