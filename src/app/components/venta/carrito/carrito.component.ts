@@ -137,19 +137,17 @@ export class CarritoComponent implements OnInit {
   }
 
   hayStock() {
-
     let cantManu =0;
     let stockManu =0;
     let cantReven =0;
     let stockReven =0;
     for (let c of this.carrito) {
-
       if (c.articuloReventa == null) {
         cantManu++;
         let cont = 0;
-
         for (let manuDet of c.articuloManufacturado.manufacturadoDetalle) {
-          if (manuDet.articuloInsumo.unidadMedida.id == manuDet.unidadMedida.id) {
+
+    /*       if (manuDet.articuloInsumo.unidadMedida.id == manuDet.unidadMedida.id) {
             if (manuDet.articuloInsumo.stockActual - (manuDet.cantidad * c.cantidad) >= 0) {
               cont++;
             }
@@ -164,13 +162,14 @@ export class CarritoComponent implements OnInit {
               cont++;
             }
 
+          } */
+          if(manuDet.articuloInsumo.stockActual - (manuDet.cantidad * c.cantidad) >= 0){
+            cont++;
           }
         }
-
         if(cont == c.articuloManufacturado.manufacturadoDetalle.length){
           stockManu++;
         }
-
       }else{
         cantReven++;
         if(c.articuloReventa.stockActual - c.cantidad >=0 ){

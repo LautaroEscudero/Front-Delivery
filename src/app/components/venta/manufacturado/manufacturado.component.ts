@@ -51,13 +51,13 @@ export class ManufacturadoComponent implements OnInit {
   } */
 
   hayStock(i: number) {
-
     let m = this.items[i];
     console.log("El item es : ", m);
     let c = 0;
     for (let a of m.manufacturadoDetalle) {
       console.log("El m Es : ", a.articuloInsumo);
-      if(a.articuloInsumo.unidadMedida.id == a.unidadMedida.id){
+
+     /*  if(a.articuloInsumo.unidadMedida.id == a.unidadMedida.id){
         if ( a.articuloInsumo.stockActual -a.cantidad >= 0 ) {
           c++;
         }
@@ -69,8 +69,11 @@ export class ManufacturadoComponent implements OnInit {
         if ( a.articuloInsumo.stockActual - (a.cantidad/1000) >= 0 ) {
           c++;
         }
+      } */
+
+      if( a.articuloInsumo.stockActual -a.cantidad >= 0 ){
+        c++;
       }
-     
     }
     console.log("El size es : ", m.manufacturadoDetalle.length);
     console.log("El c es : ", c);
