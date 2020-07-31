@@ -26,7 +26,7 @@ export class ArticuloManufacturadoComponent implements OnInit {
     manufacturadoDetalle: [
       {
         unidadMedida: {
-          id: 0,
+          id: 1,
         },
         denominacion:'',
         cantidad: null,
@@ -102,7 +102,7 @@ export class ArticuloManufacturadoComponent implements OnInit {
   addDetalle() {
     this.articuloManufacturado.manufacturadoDetalle[this.articuloManufacturado.manufacturadoDetalle.length] = {
       unidadMedida: {
-        id: 0
+        id: 1
       },
       cantidad: null,
       denominacion:'',

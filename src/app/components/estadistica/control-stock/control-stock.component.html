@@ -20,8 +20,8 @@
       <tr *ngFor="let item of insumos">
         <th>{{item.id}}</th>
         <td>{{item.denominacion}}</td>
-        <td>{{item.stockMinimo}}</td>
-        <td>{{item.stockActual}}</td>
+        <td>{{item.stockMinimo}} {{item.unidadMedida.denominacion}}</td>
+        <td>{{item.stockActual}} {{item.unidadMedida.denominacion}}</td>
       </tr>
      
     </tbody>
@@ -43,8 +43,8 @@
           <tr *ngFor="let item of reventas">
             <th>{{item.id}}</th>
             <td>{{item.denominacion}}</td>
-            <td>{{item.stockMinimo}}</td>
-            <td>{{item.stockActual}}</td>
+            <td>{{item.stockMinimo}} {{item.unidadMedida.denominacion}}</td>
+            <td>{{item.stockActual}} {{item.unidadMedida.denominacion}}</td>
           </tr>
          
         </tbody>
