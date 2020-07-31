@@ -166,7 +166,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let pedido of pedidos; let i= index">
-                <td> {{pedido.fecha | date:'short'}}</td>
+                <td> {{pedido.fecha | date:"dd-MM-yyyy HH:mm:ss a"}} <!-- date:'short' --></td>
                 <td *ngIf="pedido.estado != 2" >
                     <p *ngIf="pedido.tipoEnvio == 1">
                         Busco en local
@@ -176,7 +176,7 @@
                     </p>
                     <!--  {{pedido.tipoEnvio}} --></td>
                     <td *ngIf="pedido.estado == 2" >
-                        {{pedido.horaEstimadaFin | date:'short'}}
+                        {{pedido.horaEstimadaFin |  date:'dd-MM-yyyy HH:mm:ss a'}}<!--  date:'short' -->
                     </td>
                 <td>{{pedido.cliente.telefono}}</td>
                 <td>

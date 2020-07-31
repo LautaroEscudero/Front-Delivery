@@ -115,7 +115,7 @@ export class CarritoComponent implements OnInit {
     }, error => console.log(error));
     console.log("El numero de pedido es : ", this.numeroPedido);
   }else{
-    alert("No se puede realizar su pedido");
+    alert("No hay stock suficiente para realizar el pedido.");
   }
 
   }
