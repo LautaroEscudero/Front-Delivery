@@ -214,10 +214,19 @@
                     <td> {{us.nombre}}</td>
                     <td>{{us.apellido}}</td>
                     <td>{{us.telefono}}</td>
-                    <td><a href="#modalAgregar" role="button" class="btn
+                    <td>{{us.rol.descripcion}}</td>
+                    <td *ngIf="us.rol.descripcion != 'cliente' && us.rol.descripcion != 'admin'"><a
+                            href="#modalAgregar" role="button" class="btn
                             btn-large
                             btn-primary"
                             data-toggle="modal" (click)="setUsuario(i)">Editar</a></td>
+                    <td *ngIf="us.rol.descripcion == 'cliente' || us.rol.descripcion == 'admin'">
+                        <button class="btn
+                            btn-large
+                            btn-primary"
+                            disabled="true"
+                            >Editar</button>
+                    </td>
                     <!--  <td>
                         <button type="button" class="btn btn-danger"
                             (click)="eliminar(i)">Eliminar</button>
