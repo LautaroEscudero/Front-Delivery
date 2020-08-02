@@ -18,8 +18,8 @@ export class PedidoService {
     return this.http.get(`${this.url}/pedidos`);
   }
 
-  getPedidoPag(page: number, size: number, estado:number) {
-    return this.http.get(`${this.url}/pages?page=${page}&size=${size}&estado=${estado}`);
+  getPedidoPag(page: number, size: number, asc: boolean, estado:number) {
+    return this.http.get(`${this.url}/pages?page=${page}&size=${size}&asc=${asc}&estado=${estado}`);
   }
 
   getPedidoPagCyE(page: number, size: number, estado:number,correo: string) {

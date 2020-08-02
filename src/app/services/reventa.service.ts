@@ -28,6 +28,9 @@ export class ReventaService {
   getReventaPag(page: number, size: number) {
     return this.http.get(`${this.url}/pages?page=${page}&size=${size}`);
   }
+  getReventaPagB(page: number, size: number, termino:string) {
+    return this.http.get(`${this.url}/pagesss?page=${page}&size=${size}&termino=${termino}`);
+  }
   
   getReventaPagR(page: number, size: number,rubro:number) {
     return this.http.get(`${this.url}/pagess?page=${page}&size=${size}&rubro=${rubro}`);

@@ -144,15 +144,28 @@
     <h1>Lista de pedidos</h1>
     <table class="table table-dark table-responsive">
         <thead>
-            <select *ngIf="rol != 'cocinero'" name="estadoPedido" class="form-control"
-                [(ngModel)]="estado" (change)="getPedidosPag()">
-                <option value="1"> A Confirmar</option>
-                <option value="2">En cocina </option>
-                <option value="3"> Listos</option>
-                <option value="4">En delivery </option>
-                <option value="5">Facturado </option>
-                <option value="0">Cancelado </option>
-            </select>
+            <div class="row">
+               <!--  class="form-control" -->
+                <div class="col-md-6" *ngIf="rol != 'cocinero'">
+                    <select  name="estadoPedido" 
+                    [(ngModel)]="estado" (change)="getPedidosPag()">
+                    <option value="1"> A Confirmar</option>
+                    <option value="2">En cocina </option>
+                    <option value="3"> Listos</option>
+                    <option value="4">En delivery </option>
+                    <option value="5">Facturado </option>
+                    <option value="0">Cancelado </option>
+                </select>
+                  
+                </div>
+                <div class="col-md-4">
+                    <select [(ngModel)]="asc" (change)="getPedidosPag()">
+                        <option value="true">Ascendente</option>
+                        <option value="false">Descendente</option>
+                    </select>
+                </div>
+            </div>
+           
            
             <tr>
                 <th scope="col">Fecha</th>

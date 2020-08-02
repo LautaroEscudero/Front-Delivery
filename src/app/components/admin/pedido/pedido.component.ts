@@ -35,6 +35,7 @@ export class PedidoComponent implements OnInit {
   estado = 1;
   isFirst = false;
   isLast = false;
+  asc = true;
 
   constructor(private pedidoServ: PedidoService, private servRev: ReventaService, private insumoServ: InsumoService) {
     this.getPedidosPag();
@@ -59,7 +60,7 @@ export class PedidoComponent implements OnInit {
         this.estado = 2;
       }
       console.log("El estado es : ", this.estado);
-      this.pedidoServ.getPedidoPag(this.page, this.size, this.estado).subscribe((data: any) => {
+      this.pedidoServ.getPedidoPag(this.page, this.size, this.asc, this.estado).subscribe((data: any) => {
         this.pedidos = data.content;
         this.isFirst = data.first;
         this.isLast = data.last;

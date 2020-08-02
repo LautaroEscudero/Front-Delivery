@@ -10,7 +10,7 @@ import { Reventa } from 'src/app/modelo/reventa';
   styleUrls: ['./articulo-reventa.component.css']
 })
 export class ArticuloReventaComponent implements OnInit {
-  articuloReventa: Reventa= {
+  articuloReventa: Reventa = {
     denominacion: null,
     precioCompra: null,
     precioVenta: null,
@@ -18,14 +18,14 @@ export class ArticuloReventaComponent implements OnInit {
     stockMinimo: null,
     usuarioCarga: localStorage.getItem('email'),
     fechaAlta: Date.now(),
-    unidadMedida:{
+    unidadMedida: {
 
     },
     rubroArticulo: {
     }
   };
 
-  uMedidas :any[]= [] /* [
+  uMedidas: any[] = [] /* [
     {
       cod: 1,
       denominacion: 'Litros'
@@ -61,7 +61,7 @@ export class ArticuloReventaComponent implements OnInit {
   isLast = false;
 
   indice = 0;
-  medida =0;
+  medida = 0;
 
   file;
 
@@ -73,15 +73,23 @@ export class ArticuloReventaComponent implements OnInit {
       console.log("La data desde data", data);
     }, error => console.log(error)
     );
-    medidaServ.getMedidas().subscribe((data:any ) =>{
+    medidaServ.getMedidas().subscribe((data: any) => {
       this.uMedidas = data;
-    },error =>console.log(error));
+    }, error => console.log(error));
 
     this.getReventaPag();
   }
 
 
   ngOnInit(): void {
+  }
+
+  buscar(termino: string) {
+    if (termino.length > 0) {
+      this.getReventaPagB(termino);
+    } else {
+      this.getReventaPag();
+    }
   }
 
   getReventa() {
@@ -94,6 +102,17 @@ export class ArticuloReventaComponent implements OnInit {
 
   getReventaPag() {
     this.reventaServ.getReventaPag(this.page, this.size).subscribe((data: any) => {
+      console.log("data desde pageable ", data);
+      this.reventa = data.content;
+      this.isFirst = data.first;
+      this.isLast = data.last;
+      this.totalPages = new Array(data.totalPages);
+    }, error => console.log(error)
+    );
+  }
+
+  getReventaPagB(termino: string) {
+    this.reventaServ.getReventaPagB(this.page, this.size, termino).subscribe((data: any) => {
       console.log("data desde pageable ", data);
       this.reventa = data.content;
       this.isFirst = data.first;
@@ -117,7 +136,7 @@ export class ArticuloReventaComponent implements OnInit {
     data.append('precio_venta', this.articuloReventa.precioVenta.toString());
     data.append('actual', this.articuloReventa.stockActual.toString());
     data.append('minimo', this.articuloReventa.stockMinimo.toString());
-   // data.append('medida', this.articuloReventa.unidadMedida);
+    // data.append('medida', this.articuloReventa.unidadMedida);
     data.append('medida', this.articuloReventa.unidadMedida.id);
     data.append('id_rubro', this.articuloReventa.rubroArticulo.id.toString());
     data.append('u_alta', this.articuloReventa.usuarioCarga);
@@ -156,7 +175,7 @@ export class ArticuloReventaComponent implements OnInit {
           console.log('La respuesta del servidor', data);
           alert("Articulo Actualizado");
           this.indice = 0;
-          this.medida =0;
+          this.medida = 0;
           this.articuloReventa.unidadMedida = 0;
           this.photoSelected = null;
           this.reventa = [];
@@ -178,9 +197,9 @@ export class ArticuloReventaComponent implements OnInit {
 
   }
 
-  getMedidaXid(id: number){
-    for(let u of this.uMedidas){
-      if(u.id == id){
+  getMedidaXid(id: number) {
+    for (let u of this.uMedidas) {
+      if (u.id == id) {
         return u;
       }
     }
@@ -242,7 +261,7 @@ export class ArticuloReventaComponent implements OnInit {
   }
   resetReventa() {
     this.indice = 0;
-    this.medida =0;
+    this.medida = 0;
     this.articuloReventa = {
       denominacion: null,
       precioCompra: null,
