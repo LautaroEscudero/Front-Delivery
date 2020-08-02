@@ -222,11 +222,13 @@
                 <td *ngIf="estado == 1">
                     <button type="button" class="btn btn-success"
                     [disabled]="rol == 'cliente'"
+                    *ngIf="rol != 'cliente'"
                         (click)="actualizaEstado(i,2)">Confirmar</button>
                 </td>
                 <td *ngIf="estado == 2">
                     <button type="button" class="btn btn-success"
                     [disabled]="rol == 'cliente'"
+                    *ngIf="rol != 'cliente'"
                         (click)="actualizaEstado(i,3)">Listo</button>
                 </td>
                 <td *ngIf="estado == 3  || estado == 4">
@@ -251,6 +253,7 @@
                 <td *ngIf="estado == 2">
                     <button type="button"
                     [disabled]="rol == 'cliente'"
+                    *ngIf="rol != 'cliente'"
                     (click)="actualizaEstado(i,2)"
                      class="btn btn-primary">Demorar</button>
                 </td>

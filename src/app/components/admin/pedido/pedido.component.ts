@@ -35,7 +35,7 @@ export class PedidoComponent implements OnInit {
   estado = 1;
   isFirst = false;
   isLast = false;
-  asc = true;
+  asc = false;
 
   constructor(private pedidoServ: PedidoService, private servRev: ReventaService, private insumoServ: InsumoService) {
     this.getPedidosPag();
@@ -130,9 +130,9 @@ export class PedidoComponent implements OnInit {
         console.log("El articulo es : ", a.articuloManufacturado);
 
         for (let m of a.articuloManufacturado.manufacturadoDetalle) {
-          m.articuloInsumo.stockActual -= a.cantidad;
+          m.articuloInsumo.stockActual -= (m.cantidad * a.cantidad);
           /*  if(m.articuloInsumo.unidadMedida.id == m.unidadMedida.id){
-             m.articuloInsumo.stockActual -= a.cantidad;
+             m.articuloInsumo.stockActual -= (m.cantidad * a.cantidad);
            }else if(m.articuloInsumo.unidadMedida.id == 2 && m.unidadMedida.id == 1 ){
              m.articuloInsumo.stockActual -= ((m.cantidad/1000) * a.cantidad);
            }else if( m.articuloInsumo.unidadMedida.id == 3 && m.unidadMedida.id == 4  ){
