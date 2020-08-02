@@ -61,10 +61,7 @@ export class HomeComponent implements OnInit {
   buscar(termino: string){
 
     if(termino.length > 0){
-      console.log("El termino es : ", termino);
       this.getManufacturadoPagB(termino);
-
-
     }else{
       this.getManufacturadoPag();
     }

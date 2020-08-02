@@ -63,6 +63,8 @@ export class ArticuloManufacturadoComponent implements OnInit {
   rubros: any[];
   insumos: any[];
 
+  rubro =0;
+
   manufacturados: any[];
 
   totalPages: Array<number>;
@@ -126,6 +128,16 @@ export class ArticuloManufacturadoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  buscar(termino: string){
+
+    if(termino.length > 0){
+      this.getManufacturadoPagB(termino);
+    }else{
+      this.getManufacturadoPag();
+    }
+
+  }
+
   getManufacturado() {
     this.manufacturadoServ.getManufacturado().subscribe((data: any) => {
       this.manufacturados = data;
@@ -135,15 +147,27 @@ export class ArticuloManufacturadoComponent implements OnInit {
   }
 
   getManufacturadoPag() {
-    this.manufacturadoServ.getManufacturadoPag(this.page, this.size).subscribe((data: any) => {
+    this.manufacturadoServ.getManufacturadoPagR(this.page, this.size, this.rubro).subscribe((data: any) => {
       console.log("data desde pageable ", data);
-      this.manufacturados = data.content;
+      this.manufacturados = data.content;  
       this.isFirst = data.first;
       this.isLast = data.last;
       this.totalPages = new Array(data.totalPages);
     }, error => console.log(error)
     );
 
+    setTimeout (() => {
+      this.addDescrip();
+   }, 500);
+  }
+
+  getManufacturadoPagB(termino: string) {
+    this.manufacturadoServ.getManufacturadoPagRB(this.page, this.size, this.rubro, termino).subscribe((data: any) => {
+      this.manufacturados = data.content;
+      this.isFirst = data.first;
+      this.isLast = data.last;
+      this.totalPages = new Array(data.totalPages);
+    }, error => console.log(error));
     setTimeout (() => {
       this.addDescrip();
    }, 500);
