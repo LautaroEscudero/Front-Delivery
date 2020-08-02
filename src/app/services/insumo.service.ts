@@ -26,4 +26,7 @@ export class InsumoService {
   getInsumospag(page:number,size:number){
     return this.http.get(`${this.url}/pages?page=${page}&size=${size}`);
   }
+  getInsumospagBuscado(page:number,size:number,buscado: string){
+    return this.http.get(`${this.url}/pages?page=${page}&size=${size}&buscado=${buscado}`);
+  }
 }

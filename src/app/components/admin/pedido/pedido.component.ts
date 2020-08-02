@@ -15,7 +15,7 @@ export class PedidoComponent implements OnInit {
 
   pedidos: Pedido[];
 
-  factura :Factura= {
+  factura: Factura = {
     fecha: Date.now(),
     numero: Date.now(),
     total: 0,
@@ -36,7 +36,7 @@ export class PedidoComponent implements OnInit {
   isFirst = false;
   isLast = false;
 
-  constructor(private pedidoServ: PedidoService, private servRev : ReventaService,private insumoServ: InsumoService) {
+  constructor(private pedidoServ: PedidoService, private servRev: ReventaService, private insumoServ: InsumoService) {
     this.getPedidosPag();
   }
   getPedidosPag() {
@@ -115,27 +115,28 @@ export class PedidoComponent implements OnInit {
 
   }
 
-  controlStock(i:number){
+  controlStock(i: number) {
     let p = this.pedidos[i];
-    for(let a of p.detallePedido){
-      if(a.articuloManufacturado == null){
-        a.articuloReventa.stockActual -= a.cantidad; 
+    for (let a of p.detallePedido) {
+      if (a.articuloManufacturado == null) {
+        a.articuloReventa.stockActual -= a.cantidad;
         console.log("Se decremento el stock");
         console.log("El reventa a actualizar es : ", a.articuloReventa);
-        this.servRev.updateReventa(a.articuloReventa).subscribe((data:any) => {
+        this.servRev.updateReventa(a.articuloReventa).subscribe((data: any) => {
           console.log(data);
-        },error => console.log(error));
-      }else{
+        }, error => console.log(error));
+      } else {
         console.log("El articulo es : ", a.articuloManufacturado);
 
-        for(let m of a.articuloManufacturado.manufacturadoDetalle){
-          if(m.articuloInsumo.unidadMedida.id == m.unidadMedida.id){
-            m.articuloInsumo.stockActual -= a.cantidad;
-          }else if(m.articuloInsumo.unidadMedida.id == 2 && m.unidadMedida.id == 1 ){
-            m.articuloInsumo.stockActual -= ((m.cantidad/1000) * a.cantidad);
-          }else if( m.articuloInsumo.unidadMedida.id == 3 && m.unidadMedida.id == 4  ){
-            m.articuloInsumo.stockActual -= ((m.cantidad/1000) * a.cantidad);
-          }
+        for (let m of a.articuloManufacturado.manufacturadoDetalle) {
+          m.articuloInsumo.stockActual -= a.cantidad;
+          /*  if(m.articuloInsumo.unidadMedida.id == m.unidadMedida.id){
+             m.articuloInsumo.stockActual -= a.cantidad;
+           }else if(m.articuloInsumo.unidadMedida.id == 2 && m.unidadMedida.id == 1 ){
+             m.articuloInsumo.stockActual -= ((m.cantidad/1000) * a.cantidad);
+           }else if( m.articuloInsumo.unidadMedida.id == 3 && m.unidadMedida.id == 4  ){
+             m.articuloInsumo.stockActual -= ((m.cantidad/1000) * a.cantidad);
+           } */
           this.insumoServ.setInsumo(m.articuloInsumo).subscribe((data: any) => {
             console.log('La respuesta del servidor', data);
           }, error => console.log(error)
@@ -149,7 +150,7 @@ export class PedidoComponent implements OnInit {
 
   actualizaEstado(i: number, est: number) {
     console.log("El pedido a confirmar es : ", this.pedidos[i]);
-    if(est == 3){
+    if (est == 3) {
       this.controlStock(i);
     }
     this.pedido = this.pedidos[i];
@@ -158,11 +159,11 @@ export class PedidoComponent implements OnInit {
       console.log("Respuesta al insertar ", data);
       this.getPedidosPag();
       if (est == 2) {
-        if(this.pedido.horaEstimadaFin == null){
-        alert('Se confirmo el pedido');
-      }else {
-        alert('Se demoro el pedido');
-      }
+        if (this.pedido.horaEstimadaFin == null) {
+          alert('Se confirmo el pedido');
+        } else {
+          alert('Se demoro el pedido');
+        }
       } else if (est == 0) {
         alert('Se elimino el pedido');
       } else if (est == 4) {
@@ -187,10 +188,10 @@ export class PedidoComponent implements OnInit {
   facturar(forma) {
 
     let c = {
-      email:this.pedido.cliente.correo,
-      subject:"Factura El Buen Sabor.",
-      content: "Podes ver y descargar tu factura desde : " 
-      + `http://localhost:9000/pedido/pdfreport?numero=${this.pedido.numero}`
+      email: this.pedido.cliente.correo,
+      subject: "Factura El Buen Sabor.",
+      content: "Podes ver y descargar tu factura desde : "
+        + `http://localhost:9000/pedido/pdfreport?numero=${this.pedido.numero}`
     }
     this.pedido.estado = 5;
     this.pedido.factura = this.factura;
@@ -198,9 +199,9 @@ export class PedidoComponent implements OnInit {
     console.log("La factura es :", this.factura);
     this.pedidoServ.setPedido(this.pedido).subscribe((data: any) => {
 
-      this.pedidoServ.enviarCorreo(c).subscribe((data:any)=>{
+      this.pedidoServ.enviarCorreo(c).subscribe((data: any) => {
         console.log("Envio de correo", data);
-      },error =>console.log(error));
+      }, error => console.log(error));
 
       console.log("Respuesta al insertar ", data);
       this.getPedidosPag();
@@ -221,23 +222,23 @@ export class PedidoComponent implements OnInit {
     this.pedido = this.pedidos[i];
     console.log("El pedido es : ", this.pedido);
     window.open(`http://localhost:9000/pedido/pdfreport?numero=${this.pedido.numero}`, "_blank");
-   /*  this.pedidoServ.getPedido(this.pedido.numero).subscribe((data:any)=>{
-      console.log("data de la factura", data);
-    }, error => console.log(error)); */
+    /*  this.pedidoServ.getPedido(this.pedido.numero).subscribe((data:any)=>{
+       console.log("data de la factura", data);
+     }, error => console.log(error)); */
 
-   /*  console.log("Hola hiciste click");
-    const pdf = new PdfMakeWrapper();
-    // pdf.header('Factura');
-    pdf.info({
-      title: 'Factura',
-      author: 'Lautaro Escudero',
-      subject: 'Factura generada',
-    });
-    pdf.add(
-      new Txt("Factura Generada").bold().fontSize(20).end
-    );
-
-    pdf.create().open(); */
+    /*  console.log("Hola hiciste click");
+     const pdf = new PdfMakeWrapper();
+     // pdf.header('Factura');
+     pdf.info({
+       title: 'Factura',
+       author: 'Lautaro Escudero',
+       subject: 'Factura generada',
+     });
+     pdf.add(
+       new Txt("Factura Generada").bold().fontSize(20).end
+     );
+ 
+     pdf.create().open(); */
   }
 
 }
