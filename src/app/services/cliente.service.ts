@@ -32,6 +32,10 @@ export class ClienteService {
     return this.http.get(`${this.url}/pages?page=${page}&size=${size}`);
   }
 
+  getUsuarioPagR(page:number,size:number,order:string, asc:boolean, rol:number){
+    return this.http.get(`${this.url}/pagess?page=${page}&size=${size}&order=${order}&asc=${asc}&rol=${rol}`);
+  }
+
   addCocinero(){
     return this.http.get('http://localhost:9000/configuracion/configuracionn/unapersonamisteriosa1@gmail.com');
   }

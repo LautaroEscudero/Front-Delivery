@@ -46,9 +46,12 @@ export class UsuarioComponent implements OnInit {
 
   totalPages: Array<number>;
 
+  rol= 0;
+
   page = 0;
   size = 4;
-
+  order = 'id';
+  asc = true;
   isFirst = false;
   isLast = false;
 
@@ -64,7 +67,7 @@ export class UsuarioComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+ 
   onRegister() {
     this.serv.registerUser(this.usuario.correo, this.password).then((res) => {
       alert("Se registro al usuario");
@@ -95,7 +98,7 @@ export class UsuarioComponent implements OnInit {
 
    getUsuariosPag() {
 
-    this.userServ.getUsuarioPag(this.page,this.size).subscribe((data:any) => {
+    this.userServ.getUsuarioPagR(this.page,this.size, this.order, this.asc, this.rol).subscribe((data:any) => {
       console.log("La data es : ,", data);
       this.usuarios = data.content;
       this.isFirst = data.first;
