@@ -58,8 +58,33 @@ export class HomeComponent implements OnInit {
     // this.rol = localStorage.getItem('rol');
   }
 
+  buscar(termino: string){
+
+    if(termino.length > 0){
+      console.log("El termino es : ", termino);
+      this.getManufacturadoPagB(termino);
+
+
+    }else{
+      this.getManufacturadoPag();
+    }
+
+  }
+
   getManufacturadoPag() {
     this.servMan.getManufacturadoPagR(this.page, this.size, this.rubro).subscribe((data: any) => {
+      this.platos = data.content;
+      console.log("Los platos son : ", this.platos);
+      this.isFirst = data.first;
+      this.isLast = data.last;
+      this.totalPages = new Array(data.totalPages);
+
+    }, error => console.log(error));
+
+  }
+
+  getManufacturadoPagB(termino: string) {
+    this.servMan.getManufacturadoPagRB(this.page, this.size, this.rubro, termino).subscribe((data: any) => {
       this.platos = data.content;
       console.log("Los platos son : ", this.platos);
       this.isFirst = data.first;

@@ -30,4 +30,8 @@ export class ManufacturadoService {
   getManufacturadoPagR(page: number, size: number,rubro:number) {
     return this.http.get(`${this.url}/pagess?page=${page}&size=${size}&rubro=${rubro}`);
   }
+
+  getManufacturadoPagRB(page: number, size: number,rubro:number, termino: string) {
+    return this.http.get(`${this.url}/pagesss?page=${page}&size=${size}&rubro=${rubro}&termino=${termino}`);
+  }
 }
