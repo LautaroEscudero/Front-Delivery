@@ -20,37 +20,37 @@ export class ArticuloInsumoComponent implements OnInit {
     stockMinimo: null,
     usuarioCarga: localStorage.getItem('email'),
     fechaAlta: Date.now(),
-    unidadMedida:{
+    unidadMedida: {
     },
     rubroArticulo: {
     }
   };
 
-  medida =0;
+  medida = 0;
 
-  uMedidas:any[] = [];
- /*  uMedidas = [
-    {
-      id: 1,
-      denominacion: 'Litros'
-    },
-    {
-      id: 2,
-      denominacion: 'Mililitros'
-    },
-    {
-      id: 3,
-      denominacion: 'Kilos'
-    },
-    {
-      id: 4,
-      denominacion: 'Gramos'
-    },
-    {
-      id: 5,
-      denominacion: 'Unidad'
-    }
-  ]; */
+  uMedidas: any[] = [];
+  /*  uMedidas = [
+     {
+       id: 1,
+       denominacion: 'Litros'
+     },
+     {
+       id: 2,
+       denominacion: 'Mililitros'
+     },
+     {
+       id: 3,
+       denominacion: 'Kilos'
+     },
+     {
+       id: 4,
+       denominacion: 'Gramos'
+     },
+     {
+       id: 5,
+       denominacion: 'Unidad'
+     }
+   ]; */
 
   rubros: any[];
 
@@ -60,6 +60,8 @@ export class ArticuloInsumoComponent implements OnInit {
 
   page = 0;
   size = 4;
+  order = 'id';
+  asc = true;
 
   isFirst = false;
   isLast = false;
@@ -72,9 +74,9 @@ export class ArticuloInsumoComponent implements OnInit {
       console.log("La data desde data", data);
     }, error => console.log(error)
     );
-     medidaServ.getMedidas().subscribe((data:any ) =>{
-       this.uMedidas = data;
-     },error =>console.log(error));
+    medidaServ.getMedidas().subscribe((data: any) => {
+      this.uMedidas = data;
+    }, error => console.log(error));
 
     this.getInsumosPag();
   }
@@ -83,16 +85,23 @@ export class ArticuloInsumoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  buscar(termino: string) {
+    if (termino.length > 0) {
+      this.getInsumosPagB(termino);
+    }else{
+      this.getInsumosPag();
+    }
+  }
+
   getInsumos() {
     this.insumoServ.getInsumos().subscribe((data: any) => {
       this.insumos = data;
     }, error => console.log(error)
     );
-
   }
 
   getInsumosPag() {
-    this.insumoServ.getInsumospag(this.page, this.size).subscribe((data: any) => {
+    this.insumoServ.getInsumospag(this.page, this.size, this.order, this.asc).subscribe((data: any) => {
       console.log("data desde pageable ", data);
       this.insumos = data.content;
       this.isFirst = data.first;
@@ -103,9 +112,21 @@ export class ArticuloInsumoComponent implements OnInit {
 
   }
 
-  getMedidaXid(id: number){
-    for(let u of this.uMedidas){
-      if(u.id == id){
+  getInsumosPagB(termino: string) {
+    this.insumoServ.getInsumospagBuscado(this.page, this.size, this.order, this.asc, termino).subscribe((data: any) => {
+      console.log("data desde pageable ", data);
+      this.insumos = data.content;
+      this.isFirst = data.first;
+      this.isLast = data.last;
+      this.totalPages = new Array(data.totalPages);
+    }, error => console.log(error)
+    );
+
+  }
+
+  getMedidaXid(id: number) {
+    for (let u of this.uMedidas) {
+      if (u.id == id) {
         return u;
       }
     }
@@ -114,10 +135,10 @@ export class ArticuloInsumoComponent implements OnInit {
   guardar(forma: NgForm) {
     this.articuloInsumo.rubroArticulo = this.getRubroxId(this.indice);
     this.articuloInsumo.unidadMedida = this.getMedidaXid(this.medida);
-   /*  this.articuloInsumo.rubroArticulo = {
-      id:21,
-      denominacion:'Lacteos'
-    } */
+    /*  this.articuloInsumo.rubroArticulo = {
+       id:21,
+       denominacion:'Lacteos'
+     } */
     console.log('forma ', forma);
     console.log('valor ', forma.value);
     console.log('El insumo es : ', this.articuloInsumo);
@@ -128,7 +149,7 @@ export class ArticuloInsumoComponent implements OnInit {
       alert("Insumo guardado");
       forma.reset();
       this.indice = 0;
-      this.medida =0;
+      this.medida = 0;
       this.articuloInsumo.unidadMedida = {};
       this.insumos = [];
       this.getInsumosPag();
