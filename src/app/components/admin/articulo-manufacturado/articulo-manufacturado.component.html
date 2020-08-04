@@ -144,11 +144,11 @@
                             </select> -->
                         </div>
                         <div class="col-md-3">
-                           <!--  articuloManufacturado.manufacturadoDetalle[i].articuloInsumo.unidadMedida
+                            <!--  articuloManufacturado.manufacturadoDetalle[i].articuloInsumo.unidadMedida
                             == null -->
                             <label class="col-md-4 col-form-label ml-2">U.Medida</label><br>
                             <label class="col-md-4 col-form-label ml-2">{{articuloManufacturado.manufacturadoDetalle[i].denominacion}}</label>
-                           <!--  <input class="form-control"
+                            <!--  <input class="form-control"
                                disabled=true
                                 type="text"
                                 placeholder="U.Medida"
@@ -215,22 +215,23 @@
     </div>
     <div class="row mt-3">
         <div class="col-2 ml-5">
-        <select name="rubro"
-        (change)="getManufacturadoPag()"
-            [(ngModel)]="rubro"
-            [ngModelOptions]="{standalone: true}"
-            class="form-control">
-            <option value="0">Todos</option>
-            <option [value]="unidad.id" *ngFor="let unidad
-                of rubros;
-                let i= index">
-                {{unidad.denominacion}}</option>
-        </select>
-    </div>
-    <br>
-   
-        <div class="col-md-8 ">
-            <input #termino type="text" (keyup)="buscar(termino.value)" class="form-control" placeholder="Buscar manufacturado... ">
+            <select name="rubro"
+                (change)="getManufacturadoPag()"
+                [(ngModel)]="rubro"
+                [ngModelOptions]="{standalone: true}"
+                class="form-control">
+                <option value="0">Todos</option>
+                <option [value]="unidad.id" *ngFor="let unidad
+                    of rubros;
+                    let i= index">
+                    {{unidad.denominacion}}</option>
+            </select>
+        </div>
+        <br>
+
+        <div class="col-md-8">
+            <input #termino type="text" (keyup)="buscar(termino.value)"
+                class="form-control" placeholder="Buscar manufacturado...">
         </div>
     </div>
     <div class="co-5 m-3">
@@ -238,6 +239,24 @@
 
     <table class="table table-dark">
         <thead>
+            <div class="row">
+                <div class="col-md-8">
+                    <select [(ngModel)]="order"
+                        (change)="buscar(termino.value)">
+                        <option value="id">Id</option>
+                        <option value="denominacion">Denominacion</option>
+                        <option value="precioVenta">Precio Venta</option>
+                        <option value="tiempoEstimadoCocina">Tiempo Cocina</option>
+                        <option value="stockMinimo">Stock Minimo</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select [(ngModel)]="asc" (change)="buscar(termino.value)">
+                        <option value="true">Ascendente</option>
+                        <option value="false">Descendente</option>
+                    </select>
+                </div>
+            </div>
             <tr>
                 <th scope="col">Image</th>
                 <th scope="col">Denominacion</th>

@@ -25,11 +25,11 @@ export class ReventaService {
     return this.http.get(`${this.url}/listar`);
   }
 
-  getReventaPag(page: number, size: number) {
-    return this.http.get(`${this.url}/pages?page=${page}&size=${size}`);
+  getReventaPag(page: number, size: number, order: string, asc: boolean) {
+    return this.http.get(`${this.url}/pages?page=${page}&size=${size}&order=${order}&asc=${asc}`);
   }
-  getReventaPagB(page: number, size: number, termino:string) {
-    return this.http.get(`${this.url}/pagesss?page=${page}&size=${size}&termino=${termino}`);
+  getReventaPagB(page: number, size: number, order: string, asc: boolean, termino:string) {
+    return this.http.get(`${this.url}/pagesss?page=${page}&size=${size}&order=${order}&asc=${asc}&termino=${termino}`);
   }
   
   getReventaPagR(page: number, size: number,rubro:number) {

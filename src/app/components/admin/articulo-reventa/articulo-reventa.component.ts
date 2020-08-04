@@ -59,9 +59,11 @@ export class ArticuloReventaComponent implements OnInit {
 
   isFirst = false;
   isLast = false;
+  order = 'id';
+  asc = true;
 
   indice = 0;
-  medida = 0;
+  medida = 5;
 
   file;
 
@@ -101,7 +103,7 @@ export class ArticuloReventaComponent implements OnInit {
   }
 
   getReventaPag() {
-    this.reventaServ.getReventaPag(this.page, this.size).subscribe((data: any) => {
+    this.reventaServ.getReventaPag(this.page, this.size,this.order,this.asc).subscribe((data: any) => {
       console.log("data desde pageable ", data);
       this.reventa = data.content;
       this.isFirst = data.first;
@@ -112,7 +114,7 @@ export class ArticuloReventaComponent implements OnInit {
   }
 
   getReventaPagB(termino: string) {
-    this.reventaServ.getReventaPagB(this.page, this.size, termino).subscribe((data: any) => {
+    this.reventaServ.getReventaPagB(this.page, this.size,this.order,this.asc, termino).subscribe((data: any) => {
       console.log("data desde pageable ", data);
       this.reventa = data.content;
       this.isFirst = data.first;
@@ -128,7 +130,8 @@ export class ArticuloReventaComponent implements OnInit {
     console.log('forma ', forma);
     console.log('valor ', forma.value);
     console.log('El insumo es : ', this.articuloReventa);
-    this.articuloReventa.unidadMedida = this.getMedidaXid(this.medida);
+    console.log('La medida es : ', this.medida);
+    this.articuloReventa.unidadMedida = this.getMedidaXid(5);
 
     const data = new FormData();
     data.append('denominacion', this.articuloReventa.denominacion);
@@ -161,7 +164,7 @@ export class ArticuloReventaComponent implements OnInit {
   actualizar() {
     console.log("Se apreto actualizar");
     console.log(this.articuloReventa);
-    this.articuloReventa.unidadMedida = this.getMedidaXid(this.medida);
+    this.articuloReventa.unidadMedida = this.getMedidaXid(5);
     this.articuloReventa.rubroArticulo = this.getRubroxId(this.indice);
     this.reventaServ.updateReventa(this.articuloReventa).subscribe((data: any) => {
       console.log('La respuesta del servidor', data);

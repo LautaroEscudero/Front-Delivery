@@ -246,6 +246,7 @@
                 </td>
                 <td *ngIf="estado == 3">
                     <button type="button" class="btn btn-primary"
+                       *ngIf="rol != 'cliente'"
                         [disabled]="pedido.tipoEnvio == 1 || rol == 'cliente'"
                         (click)="actualizaEstado(i,4)">En
                         Delivery</button>

@@ -28,7 +28,7 @@ export class ArticuloManufacturadoComponent implements OnInit {
         unidadMedida: {
           id: 1,
         },
-        denominacion:'',
+        denominacion: '',
         cantidad: null,
         articuloInsumo: {
           id: 0
@@ -63,7 +63,7 @@ export class ArticuloManufacturadoComponent implements OnInit {
   rubros: any[];
   insumos: any[];
 
-  rubro =0;
+  rubro = 0;
 
   manufacturados: any[];
 
@@ -71,6 +71,8 @@ export class ArticuloManufacturadoComponent implements OnInit {
 
   page = 0;
   size = 4;
+  order = 'id';
+  asc = true;
 
   isFirst = false;
   isLast = false;
@@ -107,7 +109,7 @@ export class ArticuloManufacturadoComponent implements OnInit {
         id: 1
       },
       cantidad: null,
-      denominacion:'',
+      denominacion: '',
       articuloInsumo: {
         id: 0
       }
@@ -128,11 +130,11 @@ export class ArticuloManufacturadoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  buscar(termino: string){
+  buscar(termino: string) {
 
-    if(termino.length > 0){
+    if (termino.length > 0) {
       this.getManufacturadoPagB(termino);
-    }else{
+    } else {
       this.getManufacturadoPag();
     }
 
@@ -147,37 +149,37 @@ export class ArticuloManufacturadoComponent implements OnInit {
   }
 
   getManufacturadoPag() {
-    this.manufacturadoServ.getManufacturadoPagR(this.page, this.size, this.rubro).subscribe((data: any) => {
+    this.manufacturadoServ.getManufacturadoPagR(this.page, this.size,this.order,this.asc, this.rubro).subscribe((data: any) => {
       console.log("data desde pageable ", data);
-      this.manufacturados = data.content;  
+      this.manufacturados = data.content;
       this.isFirst = data.first;
       this.isLast = data.last;
       this.totalPages = new Array(data.totalPages);
     }, error => console.log(error)
     );
 
-    setTimeout (() => {
+    setTimeout(() => {
       this.addDescrip();
-   }, 500);
+    }, 500);
   }
 
   getManufacturadoPagB(termino: string) {
-    this.manufacturadoServ.getManufacturadoPagRB(this.page, this.size, this.rubro, termino).subscribe((data: any) => {
+    this.manufacturadoServ.getManufacturadoPagRB(this.page, this.size,this.order,this.asc, this.rubro, termino).subscribe((data: any) => {
       this.manufacturados = data.content;
       this.isFirst = data.first;
       this.isLast = data.last;
       this.totalPages = new Array(data.totalPages);
     }, error => console.log(error));
-    setTimeout (() => {
+    setTimeout(() => {
       this.addDescrip();
-   }, 500);
+    }, 500);
   }
 
-  addDescrip(){
-    for(let m of this.manufacturados){
-    for(let d of m.manufacturadoDetalle){
-      d.denominacion = d.articuloInsumo.unidadMedida.denominacion;
-    }
+  addDescrip() {
+    for (let m of this.manufacturados) {
+      for (let d of m.manufacturadoDetalle) {
+        d.denominacion = d.articuloInsumo.unidadMedida.denominacion;
+      }
     }
   }
 
@@ -189,16 +191,16 @@ export class ArticuloManufacturadoComponent implements OnInit {
     }
   }
 
-  getUnidad(id: number, i : number){
-   let ins: Insumo =  this.getInsumoxId(id);
-  // return ins.unidadMedida.denominacion;
+  getUnidad(id: number, i: number) {
+    let ins: Insumo = this.getInsumoxId(id);
+    // return ins.unidadMedida.denominacion;
 
-  console.log("El valor de i es : ", i);
-  console.log("El id es : ", id);  
-  console.log("La unidad de medida es : ", ins.unidadMedida.denominacion);
- // this.articuloManufacturado.manufacturadoDetalle[i]
- // .articuloInsumo.unidadMedida.denominacion = ins.unidadMedida.denominacion;
-  this.articuloManufacturado.manufacturadoDetalle[i].denominacion = ins.unidadMedida.denominacion;
+    console.log("El valor de i es : ", i);
+    console.log("El id es : ", id);
+    console.log("La unidad de medida es : ", ins.unidadMedida.denominacion);
+    // this.articuloManufacturado.manufacturadoDetalle[i]
+    // .articuloInsumo.unidadMedida.denominacion = ins.unidadMedida.denominacion;
+    this.articuloManufacturado.manufacturadoDetalle[i].denominacion = ins.unidadMedida.denominacion;
   }
 
   guardar(forma: NgForm) {

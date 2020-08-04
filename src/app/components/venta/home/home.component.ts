@@ -31,7 +31,8 @@ export class HomeComponent implements OnInit {
 
   pageb = 0;
   sizeb = 6;
-
+  order = 'id';
+  asc = true;
   isFirstb = false;
   isLastb = false;
 
@@ -69,7 +70,7 @@ export class HomeComponent implements OnInit {
   }
 
   getManufacturadoPag() {
-    this.servMan.getManufacturadoPagR(this.page, this.size, this.rubro).subscribe((data: any) => {
+    this.servMan.getManufacturadoPagR(this.page, this.size,this.order,this.asc, this.rubro).subscribe((data: any) => {
       this.platos = data.content;
       console.log("Los platos son : ", this.platos);
       this.isFirst = data.first;
@@ -81,7 +82,7 @@ export class HomeComponent implements OnInit {
   }
 
   getManufacturadoPagB(termino: string) {
-    this.servMan.getManufacturadoPagRB(this.page, this.size, this.rubro, termino).subscribe((data: any) => {
+    this.servMan.getManufacturadoPagRB(this.page, this.size,this.order,this.asc, this.rubro, termino).subscribe((data: any) => {
       this.platos = data.content;
       console.log("Los platos son : ", this.platos);
       this.isFirst = data.first;
@@ -93,7 +94,7 @@ export class HomeComponent implements OnInit {
   }
 
   getReventaPag() {
-    this.servRev.getReventaPag(this.pageb, this.sizeb).subscribe((data: any) => {
+    this.servRev.getReventaPag(this.pageb, this.sizeb, this.order, this.asc).subscribe((data: any) => {
       this.bebidas = data.content;
       console.log("Las bebidas son : ", this.bebidas);
       this.isFirstb = data.first;
